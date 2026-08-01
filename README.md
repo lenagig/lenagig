@@ -1,1 +1,1 @@
-[![GitHub Planet](https://raw.githubusercontent.com/lenagig/lenagig/main/planet-card.gif)](https://githubplanet-git-543426763451.asia-northeast2.run.app/card.html?username=lenagig)
+[![GitHub Planet](https://image.thum.io/get/width/800/crop/400/noanimate/wait/8/https://githubplanet-git-543426763451.asia-northeast2.run.app/card.html?username=lenagig&fix=true)](https://githubplanet-git-543426763451.asia-northeast2.run.app/card.html?username=lenagig&fix=true)
