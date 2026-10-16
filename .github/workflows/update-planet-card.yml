@@ -1,0 +1,46 @@
+name: Update Planet Card
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: update-planet-card
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    uses: nitr0yukkuri/githubplanet/.github/workflows/generate-profile-card-gif.yml@main
+    with:
+      username: lenagig
+
+  publish:
+    needs: generate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: planet-card
+          path: .
+      - name: Validate GIF
+        run: |
+          set -euo pipefail
+          file planet-card.gif | grep -q "GIF image data"
+          size_bytes="$(stat --format=%s planet-card.gif)"
+          test "$size_bytes" -le 10485760
+      - name: Commit GIF
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add planet-card.gif
+          git diff --cached --quiet && exit 0
+          git commit -m "Update animated planet card [skip ci]"
+          git push
